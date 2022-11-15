@@ -1,61 +1,64 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 
 const App = () => {
  const course = "Half Stack application development";
- const totalExercises = 3;
+ const part1 = {
+  name: "Fundamentals of React",
+  exercises: 10,
+  id: 25,
+ };
+ const part2 = {
+  name: "Using props to pass data",
+  exercises: 7,
+  id: 30,
+ };
+ const part3 = {
+  name: "State of a component",
+  exercises: 14,
+  id: 40,
+ };
+
+ const data = [part1, part2, part3];
+ let numeroEjercicios = data.length;
+
  return (
   <div>
-   <Header course={course} />
-   <Content />
-   <Total number={totalExercises} />
+   <Title curso={course} />
+   <ul>
+    {data.map((tipos) => (
+     <Tipos key={tipos.id} nombre={tipos.name} ejercicios={tipos.exercises} />
+    ))}
+   </ul>
+
+   <Total numero={numeroEjercicios} />
   </div>
  );
 };
 
-const Header = (props) => {
- return <h2>{props.course}</h2>;
+const Title = ({ curso }) => {
+ return <h1 style={{ background: "#D5DBDB" }}>{curso}</h1>;
 };
 
-const Part = (props) => {
+const Tipos = ({ id, nombre, ejercicios }) => {
  return (
-  <div>
-   <span>
-    {props.part1} {props.number1}
-   </span>
-   <span>
-    {props.part2} {props.number2}
-   </span>
-   <span>
-    {props.part3} {props.number3}
-   </span>
-  </div>
+  <li key={id}>
+   {nombre} <span> ---- Ejercicio número: {ejercicios}</span>
+  </li>
  );
 };
 
-const Content = () => {
- const part1 = "Fundamentals of React";
- const part2 = "Using props to pass data";
- const part3 = "State of a component";
- const exercises1 = 10;
- const exercises2 = 7;
- const exercises3 = 14;
- return (
-  <div>
-   <Part part1={part1} number1={exercises1} />
-   <Part part2={part2} number2={exercises2} />
-   <Part part3={part3} number3={exercises3} />
-  </div>
- );
-};
-
-const Total = (props) => {
- return (
-  <p style={{ color: "red" }}>
-   El número total de ejercicios son: {props.number}
-  </p>
- );
-};
+const Total = ({ numero }) => (
+ <p
+  style={{
+   display: "inline-block",
+   margin: "0 2em",
+   border: "1px solid red",
+   padding: "0.5em",
+  }}
+ >
+  Hay un total de: {numero} ejercicios
+ </p>
+);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
