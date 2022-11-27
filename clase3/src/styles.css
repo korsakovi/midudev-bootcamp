@@ -1,0 +1,10 @@
+body {
+  margin: 3em
+}
+
+button {
+  margin: 0 1rem;
+  padding: .3rem;
+  width: 9rem;
+  height: 3rem;
+}

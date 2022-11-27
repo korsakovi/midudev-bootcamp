@@ -35,16 +35,16 @@ const App = () => {
  );
 };
 
-const Title = ({ curso }) => {
- return <h1 style={{ background: "#D5DBDB" }}>{curso}</h1>;
-};
-
 const Tipos = ({ id, nombre, ejercicios }) => {
  return (
   <li key={id}>
    {nombre} <span> ---- Ejercicio número: {ejercicios}</span>
   </li>
  );
+};
+
+const Title = ({ curso }) => {
+ return <h1 style={{ background: "#D5DBDB" }}>{curso}</h1>;
 };
 
 const Total = ({ numero }) => (
