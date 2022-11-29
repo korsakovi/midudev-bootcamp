@@ -1,9 +1,9 @@
 import { useState } from "react";
 import ReactDOM from "react-dom/client";
 
-const Button = (props) => {
+const Button = ({ handleClick, text }) => {
  //console.log(props);
- return <button onClick={props.handleClick}>{props.text}</button>;
+ return <button onClick={handleClick}>{text}</button>;
 };
 
 const NoResults = () => {
@@ -20,12 +20,34 @@ const Statistics = ({ votes }) => {
 
  return (
   <>
-   <p>good: {votes.good}</p>
-   <p>neutral: {votes.neutral}</p>
-   <p>bad: {votes.bad}</p>
-   <p>all: {votes.all}</p>
-   <p>average: {!promedio ? <NoResults /> : promedio}</p>
-   <p>positive: {!votosPositivos ? <NoResults /> : votosPositivos}</p>
+   <table>
+    <tbody>
+     <tr>
+      <td>good:</td>
+      <td>{votes.good}</td>
+     </tr>
+     <tr>
+      <td>neutral:</td>
+      <td>{votes.neutral}</td>
+     </tr>
+     <tr>
+      <td>bad:</td>
+      <td>{votes.bad}</td>
+     </tr>
+     <tr>
+      <td>all:</td>
+      <td>{votes.all}</td>
+     </tr>
+     <tr>
+      <td>average:</td>
+      <td>{!promedio ? <NoResults /> : promedio}</td>
+     </tr>
+     <tr>
+      <td>positive:</td>
+      <td>{!votosPositivos ? <NoResults /> : votosPositivos}</td>
+     </tr>
+    </tbody>
+   </table>
   </>
  );
 };
@@ -46,7 +68,6 @@ const App = () => {
    all: votes.all + 1,
    value: votes.value + 1,
   });
-  console.log(votes);
  };
 
  const handleNeutral = () => {
