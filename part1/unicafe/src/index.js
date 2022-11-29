@@ -1,34 +1,67 @@
 import { useState } from "react";
 import ReactDOM from "react-dom/client";
 
-const App = () => {
- // save clicks of each button to its own state
- const [good, setGood] = useState(0);
- const [neutral, setNeutral] = useState(0);
- const [bad, setBad] = useState(0);
+const Button = (props) => {
+ //console.log(props);
+ return <button onClick={props.handleClick}>{props.text}</button>;
+};
 
- const handleClickVotes = (typeVote) => {
-  if (typeVote === "good") {
-   return setGood(good + 1);
-  }
-  if (typeVote === "neutral") {
-   return setNeutral(neutral + 1);
-  }
-  if (typeVote === "bad") {
-   return setBad(bad + 1);
-  }
+const NoResults = () => {
+ return <span>Sin resultados</span>;
+};
+
+const App = () => {
+ const [votes, setVotes] = useState({
+  good: 0,
+  neutral: 0,
+  bad: 0,
+  all: 0,
+  value: 0,
+ });
+
+ const handleGood = () => {
+  setVotes({
+   ...votes,
+   good: votes.good + 1,
+   all: votes.all + 1,
+   value: votes.value + 1,
+  });
+  console.log(votes);
  };
+
+ const handleNeutral = () => {
+  setVotes({
+   ...votes,
+   neutral: votes.neutral + 1,
+   all: votes.all + 1,
+  });
+ };
+
+ const handleBad = () => {
+  setVotes({
+   ...votes,
+   bad: votes.bad + 1,
+   all: votes.all + 1,
+   value: votes.value - 1,
+  });
+ };
+
+ let promedio = votes.value / votes.all;
+ let votosPositivos = (votes.good * 100) / votes.all;
 
  return (
   <div>
    <h2>give feedback</h2>
-   <button onClick={() => handleClickVotes("good")}>good</button>
-   <button onClick={() => handleClickVotes("neutral")}>neutral</button>
-   <button onClick={() => handleClickVotes("bad")}>bad</button>
+   <Button handleClick={handleGood} text="good" />
+   <Button handleClick={handleNeutral} text="neutral" />
+   <Button handleClick={handleBad} text="bad" />
    <h2>statics</h2>
-   <p>good {good}</p>
-   <p>neutral {neutral}</p>
-   <p>bad {bad}</p>
+   <p>good: {votes.good}</p>
+   <p>neutral: {votes.neutral}</p>
+   <p>bad: {votes.bad}</p>
+   <p>all: {votes.all}</p>
+   <p>average: {!promedio ? <NoResults /> : promedio}</p>
+   <p>positive: {!votosPositivos ? <NoResults /> : votosPositivos}</p>
   </div>
  );
 };
