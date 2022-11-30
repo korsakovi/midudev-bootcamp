@@ -6,14 +6,6 @@ const Button = ({ handleClick, text }) => {
  return <button onClick={handleClick}>{text}</button>;
 };
 
-const NoResults = () => {
- return <span>Sin resultados</span>;
-};
-
-const NoFeedBack = () => {
- return <p>No feedback given</p>;
-};
-
 const Statistics = ({ votes }) => {
  let promedio = votes.value / votes.all;
  let votosPositivos = (votes.good * 100) / votes.all;
@@ -40,11 +32,11 @@ const Statistics = ({ votes }) => {
      </tr>
      <tr>
       <td>average:</td>
-      <td>{!promedio ? <NoResults /> : promedio}</td>
+      <td>{!promedio ? 0 : promedio}</td>
      </tr>
      <tr>
       <td>positive:</td>
-      <td>{!votosPositivos ? <NoResults /> : votosPositivos}</td>
+      <td>{!votosPositivos ? 0 : votosPositivos}</td>
      </tr>
     </tbody>
    </table>
@@ -94,7 +86,7 @@ const App = () => {
    <Button handleClick={handleNeutral} text="neutral" />
    <Button handleClick={handleBad} text="bad" />
    <h2>statistics</h2>
-   {!votes.all ? <NoFeedBack /> : <Statistics votes={votes} />}
+   {!votes.all ? "No feedback given" : <Statistics votes={votes} />}
   </div>
  );
 };
