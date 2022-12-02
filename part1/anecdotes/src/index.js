@@ -1,30 +1,49 @@
 import { useState } from "react";
 import ReactDOM from "react-dom/client";
 
-const Button = ({ handleClick }) => {
+const ButtonAnecdota = ({ handleFrase }) => {
  return (
-  <button onClick={handleClick} style={{ margin: "1rem 1rem" }}>
+  <button onClick={handleFrase} style={{ margin: "1rem 1rem" }}>
    Mostrar anédota aleatoria
   </button>
  );
 };
 
-const App = ({ anecdotes }) => {
- const [selected, setSelected] = useState(0);
+const ButtonVoto = ({ handleVoto }) => {
+ return <button onClick={handleVoto}>Me gusta</button>;
+};
 
- const handleClick = () => {
+const App = ({ anecdotes }) => {
+ const votos = new Uint8Array(anecdotes.length);
+
+ const [selected, setSelected] = useState(0);
+ const [votes, setVotes] = useState(votos);
+
+ const handleFrase = () => {
   const aleatorio = Math.floor(Math.random() * anecdotes.length);
   setSelected(aleatorio);
  };
 
+ const handleVoto = () => {
+  const copyVotos = [...votes];
+  const resultArray = copyVotos.map((elem, indice) => {
+   return indice === selected ? (elem += 1) : elem;
+  });
+
+  setVotes(resultArray);
+  console.log(resultArray);
+ };
+
  return (
   <>
-   <Button handleClick={handleClick} />
+   <ButtonAnecdota handleFrase={handleFrase} />
+   <ButtonVoto handleVoto={handleVoto} />
    <p
     style={{ marginLeft: "2rem", border: "thin solid red", padding: ".5rem" }}
    >
     {anecdotes[selected]}
    </p>
+   <p>Has {votes[selected]} votes </p>
   </>
  );
 };
