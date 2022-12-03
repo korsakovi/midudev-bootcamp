@@ -9,8 +9,17 @@ const ButtonAnecdota = ({ handleFrase }) => {
  );
 };
 
-const ButtonVoto = ({ handleVoto }) => {
- return <button onClick={handleVoto}>Me gusta</button>;
+const ButtonVoto = ({ handleVoto, masVotada }) => {
+ return (
+  <button
+   onClick={() => {
+    handleVoto();
+    masVotada();
+   }}
+  >
+   Me gusta
+  </button>
+ );
 };
 
 const App = ({ anecdotes }) => {
@@ -18,6 +27,7 @@ const App = ({ anecdotes }) => {
 
  const [selected, setSelected] = useState(0);
  const [votes, setVotes] = useState(votos);
+ const [masVotos, setVotos] = useState("");
 
  const handleFrase = () => {
   const aleatorio = Math.floor(Math.random() * anecdotes.length);
@@ -31,19 +41,28 @@ const App = ({ anecdotes }) => {
   });
 
   setVotes(resultArray);
-  console.log(resultArray);
+  //console.log(resultArray);
+ };
+
+ const masVotada = () => {
+  if (votes[selected] === Math.max(...votes)) {
+   return setVotos(anecdotes[selected]);
+  }
  };
 
  return (
   <>
+   <h2>Anecdote of the day</h2>
    <ButtonAnecdota handleFrase={handleFrase} />
-   <ButtonVoto handleVoto={handleVoto} />
+   <ButtonVoto handleVoto={handleVoto} masVotada={masVotada} />
    <p
     style={{ marginLeft: "2rem", border: "thin solid red", padding: ".5rem" }}
    >
     {anecdotes[selected]}
    </p>
    <p>Has {votes[selected]} votes </p>
+   <h2>Anecdote with most votes</h2>
+   <p>{masVotos}</p>
   </>
  );
 };
