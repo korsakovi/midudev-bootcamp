@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { SearchFilter } from "./components/SearchFilter";
+import { FormPersons } from "./components/FormPersons";
+import { Persons } from "./components/Persons";
 
 const App = () => {
  const [persons, setPersons] = useState([
@@ -26,11 +29,8 @@ const App = () => {
 
  const handleSubmit = (e) => {
   e.preventDefault();
-
   const nuevaPersona = { name: newName, number: number };
-
   const concatenado = persons.concat(nuevaPersona);
-
   setPersons(concatenado);
 
   setNewName("");
@@ -47,41 +47,17 @@ const App = () => {
  return (
   <div>
    <h2>Phonebook</h2>
-   <div>
-    Filter shown with
-    <input
-     onChange={handleChangeFilter}
-     placeholder="Busca contactos..."
-    ></input>
-   </div>
+   <SearchFilter handleFilter={handleChangeFilter} />
    <h2>Add a new</h2>
-   <form>
-    <div>
-     name: <input id="name" onChange={handleChangeName} value={newName} />
-    </div>
-    <div>
-     number: <input onChange={handleChangeNumber} value={number}></input>
-    </div>
-    <div>
-     <button onClick={handleSubmit} type="submit">
-      add
-     </button>
-    </div>
-   </form>
+   <FormPersons
+    handleName={handleChangeName}
+    handleNumber={handleChangeNumber}
+    handleSubmit={handleSubmit}
+    newName={newName}
+    number={number}
+   />
    <h2>Numbers</h2>
-   <ul>
-    {persons
-     .filter((person) => {
-      return search.toLowerCase() === ""
-       ? person
-       : person.name.toLowerCase().includes(search);
-     })
-     .map((person) => (
-      <li key={person.name}>
-       {person.name} {person.number}
-      </li>
-     ))}
-   </ul>
+   <Persons persons={persons} search={search} />
   </div>
  );
 };
