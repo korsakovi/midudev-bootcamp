@@ -1,5 +1,5 @@
-export function Country({ country }) {
- return <Data country={country} />;
+export function Country({ country, myKey }) {
+ return <Data key={myKey} country={country} />;
 }
 
 const Lenguaje = ({ country, languages }) => {
@@ -10,12 +10,23 @@ const Lenguaje = ({ country, languages }) => {
  }
 };
 
-export const Name = ({ country }) => {
+export const ManyMatches = () => {
  return (
-  <>
-   <li>{country.name.common}</li>
-  </>
+  <p style={{ color: "red", fontSize: "2rem" }}>
+   Too many matches, specify another filter
+  </p>
  );
+};
+
+export const Countries = ({ filteredResults, setFilteredResults }) => {
+ if (filteredResults.length === 1) return null;
+
+ return filteredResults.map((country, key) => (
+  <div key={key}>
+   {country.name.common}
+   <button onClick={() => setFilteredResults([country])}>show</button>
+  </div>
+ ));
 };
 
 const Data = ({ country }) => {
