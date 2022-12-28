@@ -1,3 +1,5 @@
+import Weather from "./Weather";
+
 export function Country({ country, myKey }) {
  return <Data key={myKey} country={country} />;
 }
@@ -44,6 +46,10 @@ const Data = ({ country }) => {
    </div>
    <div>
     <img src={country.flags.png} alt="Bandera" />
+   </div>
+   <br />
+   <div>
+    <Weather capital={country.capital} />
    </div>
   </>
  );
