@@ -37,6 +37,7 @@ function App() {
     return prevNotes.concat(newNote);
    }).catch((error) => console.log(error));
   });
+  setNewNote("");
  };
 
  return (
